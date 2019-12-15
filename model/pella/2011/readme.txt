@@ -4,7 +4,7 @@ pella2011 - estimates logp
             p is between 0 and Inf
             Bmsy/K >= 0.368
 
-pella2014 - estimates p
+pella     - estimates p
             user sets the bounds p in model.ctl, somewhere between -1 and Inf
             Bmsy/K can be anything, only restricted by p bounds in model.ctl
 
