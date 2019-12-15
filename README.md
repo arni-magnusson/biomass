@@ -1,2 +1,1 @@
-# biomass
-Simple biomass-dynamic model
+# Simple biomass-dynamic model
