@@ -1,6 +1,6 @@
 //==============================================================================
 // File:        pella.tpl
-// Model:       Pella-Tomlinson model, with Binit=k*a
+// Model:       Pella-Tomlinson model, with Binit = k * a
 // Parameters:  r, k, a, p, q, sigma
 // Fitted data: Biomass index
 // Likelihood:  Log-transformed normal
@@ -46,9 +46,9 @@ DATA_SECTION
   vector logI(1,ni)
   // Switch to control file
   !! string run_name = string(adprogram_name);
-  !! if(option_match(argc,argv,"-ind") > -1)
+  !! if(option_match(argc, argv,"-ind") > -1)
   !! {
-  !!   run_name = argv[option_match(argc,argv,"-ind") + 1];
+  !!   run_name = argv[option_match(argc, argv, "-ind") + 1];
   !!   run_name = run_name.substr(0, run_name.rfind("."));
   !! }
   !! change_datafile_name((adstring)run_name.c_str() + ".ctl");
@@ -110,7 +110,7 @@ PRELIMINARY_CALCS_SECTION
   Iyear = (ivector) column(Idata,1);
   I = column(Idata,2);
   X = Iyear - Cyear(1) + 1;
-  halfnlog2pi = 0.5*ni*log(2*pi);
+  halfnlog2pi = 0.5 * ni * log(2*pi);
   logI = log(I);
   // Parameters
   logr = logr_plui(4);
@@ -129,19 +129,19 @@ PROCEDURE_SECTION
 REPORT_SECTION
   summary.initialize();
   get_summary();
-  report<<setprecision(12)
-        <<"# r"      <<endl<<r      <<endl
-        <<"# k"      <<endl<<k      <<endl
-        <<"# a"      <<endl<<a      <<endl
-        <<"# p"      <<endl<<p      <<endl
-        <<"# q"      <<endl<<q      <<endl
-        <<"# sigma"  <<endl<<sigma  <<endl
-        <<"# RSS"    <<endl<<RSS    <<endl
-        <<"# neglogL"<<endl<<neglogL<<endl<<endl;
-  report<<setprecision(4)
-        <<"# Model summary"<<endl
-        <<" Year Biomass Catch Index IndexFit"<<endl
-        <<summary<<endl;
+  report << setprecision(12)
+         << "# r"       << endl << r       << endl
+         << "# k"       << endl << k       << endl
+         << "# a"       << endl << a       << endl
+         << "# p"       << endl << p       << endl
+         << "# q"       << endl << q       << endl
+         << "# sigma"   << endl << sigma   << endl
+         << "# RSS"     << endl << RSS     << endl
+         << "# neglogL" << endl << neglogL << endl << endl;
+  report << setprecision(4)
+         << "# Model summary" << endl
+         << " Year Biomass Catch Index IndexFit" << endl
+         << summary << endl;
 
 FUNCTION get_fit
   r = mfexp(logr);
@@ -173,23 +173,23 @@ FUNCTION write_mcmc
   mcmc_iteration++;
   // Parameters
   if(mcmc_iteration == 1)
-    mcmc_par<<"neglogL,r,k,a,p,q,sigma"<<endl;
-  mcmc_par<<neglogL<<","
-          <<r      <<","
-          <<k      <<","
-          <<a      <<","
-          <<p      <<","
-          <<q      <<","
-          <<sigma  <<endl;
+    mcmc_par << "neglogL,r,k,a,p,q,sigma" << endl;
+  mcmc_par << neglogL << ","
+           << r       << ","
+           << k       << ","
+           << a       << ","
+           << p       << ","
+           << q       << ","
+           << sigma   << endl;
   // Biomass
   if(mcmc_iteration == 1)
   {
-    mcmc_bio<<Cyear(1);
+    mcmc_bio << Cyear(1);
     for(int t=2; t<=nc; t++)
-      mcmc_bio<<","<<Cyear(t);
-    mcmc_bio<<endl;
+      mcmc_bio << "," << Cyear(t);
+    mcmc_bio << endl;
   }
-  mcmc_bio<<B(1);
+  mcmc_bio << B(1);
   for(int t=2; t<=nc; t++)
-    mcmc_bio<<","<<B(t);
-  mcmc_bio<<endl;
+    mcmc_bio << "," << B(t);
+  mcmc_bio << endl;
