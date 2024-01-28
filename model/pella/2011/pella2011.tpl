@@ -1,21 +1,21 @@
-//======================================================================================================================
+//==============================================================================
 // File:        pella.tpl
 // Model:       Pella-Tomlinson model, with Binit=k*a
 // Parameters:  r, k, a, p, q, sigma
 // Fitted data: Abundance index
 // Likelihood:  Log-transformed normal
 // References:  Polacheck et al. (1993)
-// Notes:       q and sigma are free parameters, to allow full uncertainty in MCMC analysis
-// History:      6 Jan 2011 Arni Magnusson improved vector extraction
-//               7 Oct 2010 Arni Magnusson improved string handling and comments
-//               9 Mar 2010 Arni Magnusson created, to benchmark against R optimizers
-//======================================================================================================================
+// Notes:       q and sigma are free parameters, to allow uncertainty
+// History:     2011-01-06 Arni Magnusson improved vector extraction
+//              2010-10-07 Arni Magnusson improved string handling and comments
+//              2010-03-09 Arni Magnusson created
+//==============================================================================
 // Implementation notes
 //   Abundance index may not exist for all years
 //   Vectors that include all years: B, C
 //   Vectors that include abundance index years: I, Ifit, X
 //   X links long and short vectors
-//======================================================================================================================
+//==============================================================================
 
 GLOBALS_SECTION
   #include "admodel.h"

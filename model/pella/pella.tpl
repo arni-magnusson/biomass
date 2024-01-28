@@ -1,22 +1,23 @@
-//======================================================================================================================
+//==============================================================================
 // File:        pella.tpl
 // Model:       Pella-Tomlinson model, with Binit=k*a
 // Parameters:  r, k, a, p, q, sigma
 // Fitted data: Abundance index
 // Likelihood:  Log-transformed normal
 // References:  Polacheck et al. (1993)
-// Notes:       q and sigma are free parameters, to allow full uncertainty in MCMC analysis
-// History:     28 Apr 2014 Arni Magnusson added harvest rate, reference points, and p is estimated on a linear scale
-//              06 Jan 2011 Arni Magnusson improved vector extraction
-//              07 Oct 2010 Arni Magnusson improved string handling and comments
-//              09 Mar 2010 Arni Magnusson created, to benchmark against R optimizers
-//======================================================================================================================
+// Notes:       q and sigma are free parameters, to allow uncertainty
+// History:     2014-04-28 Arni Magnusson added harvest rate, reference points,
+//                         and p is estimated on a linear scale
+//              2011-01-06 Arni Magnusson improved vector extraction
+//              2010-10-07 Arni Magnusson improved string handling and comments
+//              2010-03-09 Arni Magnusson created
+//==============================================================================
 // Implementation notes
 //   Abundance index may not exist for all years
 //   Vectors that include all years: B, C
 //   Vectors that include abundance index years: I, Ifit, X
 //   X links long and short vectors
-//======================================================================================================================
+//==============================================================================
 
 GLOBALS_SECTION
   #include "admodel.h"
@@ -121,7 +122,7 @@ PRELIMINARY_CALCS_SECTION
   logr = logr_plui(4);
   logk = logk_plui(4);
   loga = loga_plui(4);
-  p = p_plui(4) + 1e-15;  // add tiny constant to ensure n is not exactly 0
+  p = p_plui(4) + 1e-15;  // add tiny constant to ensure p is not exactly 0
   logq = logq_plui(4);
   logsigma = logsigma_plui(4);
 

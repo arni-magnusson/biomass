@@ -1,19 +1,19 @@
-//======================================================================================================================
+//==============================================================================
 // File:        fletcher.tpl
 // Model:       Pella-Tomlinson model, with Binit=k*a
 // Parameters:  m, k, a, n, q, sigma
 // Fitted data: Abundance index
 // Likelihood:  Log-transformed normal
 // References:  Fletcher (1978)
-// Notes:       q and sigma are free parameters, to allow full uncertainty in MCMC analysis
-// History:     28 Apr 2014 Arni Magnusson forked from pella.tpl (dated 07 Jan 2011)
-//======================================================================================================================
+// Notes:       q and sigma are free parameters, to allow uncertainty
+// History:     2014-04-28 Arni Magnusson forked from pella.tpl (2011-01-07)
+//==============================================================================
 // Implementation notes
 //   Abundance index may not exist for all years
 //   Vectors that include all years: B, C
 //   Vectors that include abundance index years: I, Ifit, X
 //   X links long and short vectors
-//======================================================================================================================
+//==============================================================================
 
 GLOBALS_SECTION
   #include "admodel.h"
