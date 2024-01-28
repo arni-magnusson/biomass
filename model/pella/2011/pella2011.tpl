@@ -2,7 +2,7 @@
 // File:        pella.tpl
 // Model:       Pella-Tomlinson model, with Binit=k*a
 // Parameters:  r, k, a, p, q, sigma
-// Fitted data: Abundance index
+// Fitted data: Biomass index
 // Likelihood:  Log-transformed normal
 // References:  Polacheck et al. (1993)
 // Notes:       q and sigma are free parameters, to allow uncertainty
@@ -11,9 +11,9 @@
 //              2010-03-09 Arni Magnusson created
 //==============================================================================
 // Implementation notes
-//   Abundance index may not exist for all years
+//   Biomass index may not exist for all years
 //   Vectors that include all years: B, C
-//   Vectors that include abundance index years: I, Ifit, X
+//   Vectors that include biomass index years: I, Ifit, X
 //   X links long and short vectors
 //==============================================================================
 
@@ -40,7 +40,7 @@ DATA_SECTION
   ivector Iyear(1,ni)
   vector C(1,nc)
   vector I(1,ni)
-  ivector X(1,ni)  // years with abundance index: 1995 | 1998 | ...
+  ivector X(1,ni)  // years with biomass index: 1995 | 1998 | ...
   // Constants
   number halfnlog2pi
   vector logI(1,ni)
@@ -163,7 +163,7 @@ FUNCTION get_summary
   summary.colfill(1,(dvector)Cyear);
   summary.colfill(2,B);
   summary.colfill(3,C);
-  for(int i=1; i<=ni; i++)  // allow missing years in abundance index
+  for(int i=1; i<=ni; i++)  // allow missing years in biomass index
   {
     summary(X(i),4) = I(i);
     summary(X(i),5) = Ifit(i);
