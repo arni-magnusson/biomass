@@ -6,11 +6,6 @@
 // Likelihood:  Log-transformed normal
 // References:  Polacheck et al. (1993)
 // Notes:       q and sigma are free parameters, to allow uncertainty
-// History:     2014-04-28 Arni Magnusson added harvest rate, reference points,
-//                         and p is estimated on a linear scale
-//              2011-01-06 Arni Magnusson improved vector extraction
-//              2010-10-07 Arni Magnusson improved string handling and comments
-//              2010-03-09 Arni Magnusson created
 //==============================================================================
 // Implementation notes
 //   Biomass index may not exist for all years
