@@ -149,9 +149,9 @@ REPORT_SECTION
          << "# ucurrent"      << endl << ucurrent  << endl
          << "# BcurrentXuMSY" << endl << BcurrentXuMSY << endl << endl;
   report << setprecision(6)
-         << "# Model summary" << endl
+         << "# Model summary"                               << endl
          << " Year Biomass Catch Surplus HR Index IndexFit" << endl
-         << summary << endl;
+         << summary                                         << endl;
 
 FUNCTION get_fit
   r = mfexp(logr);
@@ -165,7 +165,8 @@ FUNCTION get_fit
     g(t) = r/p * B(t) * (1-pow(B(t)/k,p));
     B(t+1) = sfabs(B(t) + g(t) - C(t));
   }
-  Ifit = q*B(X);
+  g(nc) = r/p * B(nc) * (1-pow(B(nc)/k,p));
+  Ifit = q * B(X);
 
 FUNCTION get_refpts
   Bmsy = k * pow(1/(p+1),1/p);

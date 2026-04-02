@@ -96,13 +96,14 @@ PARAMETER_SECTION
   number ucurrent
   number BcurrentXuMSY
   // Updated
+  vector g(1,nc)
   vector B(1,nc)
   vector u(1,nc)
   vector Bfit(1,ni)
   vector Ifit(1,ni)
   number RSS
   // Report
-  matrix summary(1,nc,1,6)  // Year | B | C | u | I | Ifit
+  matrix summary(1,nc,1,7)  // Year | B | C | g | u | I | Ifit
   // Objfun
   objective_function_value neglogL
 
@@ -143,14 +144,15 @@ REPORT_SECTION
   report << setprecision(12)
          << "# Bmsy"          << endl << Bmsy          << endl
          << "# BmsyOverK"     << endl << BmsyOverK     << endl
+         << "# MSY"           << endl << m             << endl
          << "# uMSY"          << endl << uMSY          << endl
          << "# Bcurrent"      << endl << Bcurrent      << endl
          << "# ucurrent"      << endl << ucurrent      << endl
          << "# BcurrentXuMSY" << endl << BcurrentXuMSY << endl << endl;
-  report << setprecision(4)
-         << "# Model summary"                          << endl
-         << " Year Biomass Catch HRate Index IndexFit" << endl
-         << summary                                    << endl;
+  report << setprecision(6)
+         << "# Model summary"                               << endl
+         << " Year Biomass Catch Surplus HR Index IndexFit" << endl
+         << summary                                         << endl;
 
 FUNCTION get_fit
   m = mfexp(logm);
@@ -162,7 +164,11 @@ FUNCTION get_fit
   sigma = mfexp(logsigma);
   B(1) = k * a;
   for(int t=1; t<=nc-1; t++)
-    B(t+1) = sfabs(B(t) + gamma*m*B(t)/k*(1-pow(B(t)/k,n-1)) - C(t));
+  {
+    g(t) = gamma * m * B(t) / k * (1-pow(B(t)/k,n-1));
+    B(t+1) = sfabs(B(t) + g(t) - C(t));
+  }
+  g(nc) = gamma * m * B(nc) / k * (1-pow(B(nc)/k,n-1));
   Ifit = q * B(X);
 
 FUNCTION get_refpts
@@ -182,11 +188,12 @@ FUNCTION get_summary
   summary.colfill(1,(dvector)Cyear);
   summary.colfill(2,B);
   summary.colfill(3,C);
-  summary.colfill(4,u);
+  summary.colfill(4,g);
+  summary.colfill(5,u);
   for(int i=1; i<=ni; i++)  // allow missing years in biomass index
   {
-    summary(X(i),5) = I(i);
-    summary(X(i),6) = Ifit(i);
+    summary(X(i),6) = I(i);
+    summary(X(i),7) = Ifit(i);
   }
 
 FUNCTION write_mcmc
@@ -203,9 +210,10 @@ FUNCTION write_mcmc
            << sigma   << endl;
   // Refpts
   if(mcmc_iteration == 1)
-    mcmc_ref << "Bmsy,BmsyOverK,uMSY,Bcurrent,ucurrent,BcurrentXuMSY" << endl;
+    mcmc_ref << "Bmsy,BmsyOverK,MSY,uMSY,Bcurrent,ucurrent,BcurrentXuMSY" << endl;
   mcmc_ref << Bmsy          << ","
            << BmsyOverK     << ","
+           << MSY           << ","
            << uMSY          << ","
            << Bcurrent      << ","
            << ucurrent      << ","
